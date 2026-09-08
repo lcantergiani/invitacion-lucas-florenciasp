@@ -8,8 +8,6 @@ const ease = [0.22, 1, 0.36, 1]
 const initialForm = {
   name: '',
   attendance: 'yes',
-  plusOne: false,
-  plusOneName: '',
   diet: '',
   song: '',
 }
@@ -34,7 +32,7 @@ export default function RSVP() {
     const body = new URLSearchParams({
       nombre: form.name,
       asistencia: asiste ? 'Sí' : 'No',
-      acompanante: asiste && form.plusOne ? form.plusOneName : '',
+      acompanante: '',
       comentario: asiste ? form.diet : '',
       cancion: asiste ? form.song : '',
     })
@@ -146,45 +144,6 @@ export default function RSVP() {
                     transition={{ duration: 0.5, ease }}
                     className="space-y-6 overflow-hidden"
                   >
-                    {/* +1 */}
-                    <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-accent/70 px-4 py-3">
-                      <input
-                        type="checkbox"
-                        checked={form.plusOne}
-                        onChange={(e) => update('plusOne', e.target.checked)}
-                        className="h-4 w-4 accent-accent"
-                      />
-                      <span className="font-sans text-sm text-ink">
-                        Voy con acompañante (+1)
-                      </span>
-                    </label>
-
-                    {/* Nombre del acompañante (solo si marca +1) */}
-                    <AnimatePresence initial={false}>
-                      {form.plusOne && (
-                        <motion.div
-                          key="plusOneName"
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.5, ease }}
-                          className="overflow-hidden"
-                        >
-                          <label className="mb-2 block font-sans text-xs uppercase tracking-widest2 text-stone">
-                            Nombre y apellido del acompañante
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            value={form.plusOneName}
-                            onChange={(e) => update('plusOneName', e.target.value)}
-                            placeholder="Nombre de tu acompañante"
-                            className={inputClass}
-                          />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
                     {/* Restricciones alimentarias */}
                     <div>
                       <label className="mb-2 block font-sans text-xs uppercase tracking-widest2 text-stone">
